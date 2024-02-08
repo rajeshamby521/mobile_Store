@@ -15,8 +15,8 @@ class ProductListPage extends StatelessWidget {
           onTap: (){
             showAlertDialog();
           },
-            child: Icon(Icons.logout)),
-        SizedBox(
+            child: const Icon(Icons.logout)),
+        const SizedBox(
           width: 10,
         )
       ]),
@@ -40,21 +40,21 @@ class ProductListPage extends StatelessWidget {
                     border: Border.all(
                         color: Colors.black, // Set border color
                         width: 1.0), // Set border width
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                         Radius.circular(10.0)), // Set rounded corner radius
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                           blurRadius: 5,
                           color: Colors.black38,
                           offset: Offset(1, 3))
                     ] // Make rounded corner of border
                     ),
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Row(
                   children: [
                     productListController.products[index].image.isNotEmpty
                         ? ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            borderRadius: const BorderRadius.all(Radius.circular(50)),
                             child: Image.file(
                               File(productListController.products[index].image),
                               width: 50.0,
@@ -63,7 +63,7 @@ class ProductListPage extends StatelessWidget {
                             ),
                           )
                         : ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            borderRadius: const BorderRadius.all(Radius.circular(50)),
                             child: Container(
                               decoration: BoxDecoration(color: Colors.red[200]),
                               width: 50,
@@ -74,7 +74,7 @@ class ProductListPage extends StatelessWidget {
                       child: ListTile(
                         title: Row(
                           children: [
-                            Text('Name: ' + product.name),
+                            Text('Name: ${product.name}'),
                           ],
                         ),
                         subtitle: Row(
@@ -97,7 +97,7 @@ class ProductListPage extends StatelessWidget {
               );
             },
             separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
+              return const SizedBox(
                 height: 10,
               );
             },

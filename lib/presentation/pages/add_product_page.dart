@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_store/presentation/controllers/add_product_controller.dart';
 
-import '../../resource/strings_manager.dart';
 import '../common_component/common_editext_view.dart';
 
 class AddProductPage extends StatelessWidget {
@@ -41,7 +40,7 @@ class AddProductPage extends StatelessWidget {
               onPressed: () => addProductController.addProduct(),
               child: addProductController.isLoading.value
                   ? const CircularProgressIndicator()
-                  : Text('Add Product'),
+                  : const Text('Add Product'),
             ),
           ],
         ),
@@ -83,7 +82,7 @@ class AddProductPage extends StatelessWidget {
             _openImageSelection();
           },
           child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(100)),
+            borderRadius: const BorderRadius.all(Radius.circular(100)),
             child: addProductController.imageFile.value != null
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(16.0),
@@ -110,9 +109,9 @@ class AddProductPage extends StatelessWidget {
   void _openImageSelection() {
     Get.bottomSheet(
       Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: const BorderRadius.only(
+          borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
         ),
         child: Wrap(
@@ -120,16 +119,16 @@ class AddProductPage extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.end,
           children: [
             ListTile(
-              leading: Icon(Icons.camera),
-              title: Text('Camera'),
+              leading: const Icon(Icons.camera),
+              title: const Text('Camera'),
               onTap: () {
                 Get.back();
                 addProductController.uploadImage(ImageSource.camera);
               },
             ),
             ListTile(
-              leading: Icon(Icons.image),
-              title: Text('Gallery'),
+              leading: const Icon(Icons.image),
+              title: const Text('Gallery'),
               onTap: () {
                 Get.back();
                 addProductController.uploadImage(ImageSource.gallery);

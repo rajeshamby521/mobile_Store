@@ -93,7 +93,7 @@ class TextInputField extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               errorText,
-              style: TextStyle(
+              style: const TextStyle(
 
                   color: Colors.red),
 

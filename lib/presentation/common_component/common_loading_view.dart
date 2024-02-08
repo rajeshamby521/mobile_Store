@@ -50,7 +50,7 @@ Future<void> showLoadingIndicator(
     {bool isModal = true, Color? modalColor}) async {
   try {
     debugPrint('Showing loading overlay');
-    const _child = Center(
+    const child = Center(
       child: CircularProgressIndicator(),
       //CircularProcess(),
     );
@@ -61,10 +61,10 @@ Future<void> showLoadingIndicator(
                 ModalBarrier(
                   color: modalColor,
                 ),
-                _child
+                child
               ],
             )
-          : _child,
+          : child,
     );
   } catch (err) {
     debugPrint('Exception showing loading overlay\n${err.toString()}');
