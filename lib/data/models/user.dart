@@ -1,23 +1,26 @@
 class User {
-  final int id;
   final String username;
   final String password;
+  final String? email;
+  final String? confirmPassword;
 
-  User({required this.id, required this.username, required this.password});
+  User({required this.username, required this.password, this.email, this.confirmPassword});
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'username': username,
       'password': password,
+      'email': email,
+      'confirmPassword': confirmPassword,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'],
       username: map['username'],
       password: map['password'],
+      email: map['email'],
+      confirmPassword: map['confirmPassword'],
     );
   }
 }

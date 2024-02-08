@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'domain/repositories/product_repository_impl.dart';
 import 'domain/repositories/user_repository_impl.dart';
+import 'domain/repositories/product_repository_impl.dart';
 import 'domain/usecases/add_product_usecase.dart';
 import 'domain/usecases/get_products_usecase.dart';
 import 'domain/usecases/login_usecase.dart';
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'mobile_store',
       theme: ThemeData(
         primarySwatch: Colors.blue,

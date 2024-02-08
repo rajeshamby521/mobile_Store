@@ -1,10 +1,11 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import '../../data/models/product.dart';
-import '../../data/repositories/product_repository.dart';
+import '../../data/models/user.dart';
+import '../../data/repositories/user_repository.dart';
 
-class ProductRepositoryImpl extends ProductRepository {
+class UserRepositoryImpl extends UserRepository {
   static Database? _database;
 
   Future<Database> get database async {
@@ -20,28 +21,42 @@ class ProductRepositoryImpl extends ProductRepository {
       version: 1,
       onCreate: (db, version) async {
         await db.execute(
-          "CREATE TABLE products(id INTEGER PRIMARY KEY, name TEXT, price REAL, image TEXT, category TEXT)",
+          "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, email TEXT, confirmPassword TEXT)",
+        );
+        await db.execute(
+          "CREATE TABLE products(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price REAL, image TEXT, category TEXT)",
         );
       },
     );
   }
 
   @override
-  Future<void> addProduct(Product product) async {
+  Future<void> registerUser(User user) async {
     final db = await database;
-    await db.insert(
-      'products',
-      product.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    await db.insert('users', user.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   @override
-  Future<List<Product>> getAllProducts() async {
+  Future<User?> loginUser(String username, String password) async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('products');
-    return List.generate(maps.length, (i) {
-      return Product.fromMap(maps[i]);
-    });
+    final List<Map<String, dynamic>> maps = await db.query('users',
+        where: 'username = ? AND password = ?', whereArgs: [username, password]);
+    if (maps.isEmpty) {
+      return null;
+    } else {
+      // final prefs = await SharedPreferences.getInstance();
+      // await prefs.setInt('userId', maps.first['id']);
+      // await prefs.setBool('isLogin', true);
+      return User.fromMap(maps.first);
+    }
+  }
+
+  Future<void> logoutUser() async {
+    final db = await database;
+    // final prefs = await SharedPreferences.getInstance();
+    // await prefs.setInt('userId', maps.first['id']);
+    // await prefs.setBool('isLogin', true);
+    await db.delete('users');
   }
 }

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_store/presentation/controllers/login_controller.dart';
 
+import '../../resource/strings_manager.dart';
+import '../common_component/common_editext_view.dart';
+
 class LoginPage extends StatelessWidget {
   final LoginController loginController = Get.find();
 
@@ -15,16 +18,9 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextFormField(
-              onChanged: loginController.setUsername,
-              decoration: const InputDecoration(labelText: 'Username'),
-            ),
+            _nameField(),
             const SizedBox(height: 16),
-            TextFormField(
-              onChanged: loginController.setPassword,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: 'Password'),
-            ),
+            _passwordField(),
             const SizedBox(height: 16),
             Obx(() => ElevatedButton(
               onPressed: () => loginController.login(),
@@ -41,5 +37,25 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _nameField() {
+    return Obx(() => TextInputField(
+      isPasswordField: false,
+      errorText: loginController.errorName.value,
+      hintText: StringManager.name,
+      textInputType: TextInputType.text,
+      onChanged: (val)=>loginController.setUsername(val!),
+    )) ;
+  }
+
+  Widget _passwordField() {
+    return Obx(() => TextInputField(
+      errorText: loginController.errorPassword.value,
+      hintText: StringManager.password,
+      textInputType: TextInputType.text,
+      isPasswordField: true,
+      onChanged: (val)=>loginController.setPassword(val!),
+    ));
   }
 }

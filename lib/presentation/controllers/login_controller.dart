@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../domain/usecases/login_usecase.dart';
+import '../../resource/strings_manager.dart';
 
 class LoginController extends GetxController {
   final LoginUseCase loginUseCase;
@@ -15,16 +16,33 @@ class LoginController extends GetxController {
 
   void setPassword(String value) => password.value = value;
 
+  RxString errorPassword=''.obs;
+  RxString errorName=''.obs;
+
+  void setErrorUsername(String value) => errorName.value = value;
+  void setErrorPassword(String value) => errorPassword.value = value;
+
   Future<void> login() async {
     try {
-      isLoading.value = true;
-      final user = await loginUseCase.execute(username.value, password.value);
-      print("${user?.username}");
-      print("${user?.password}");
-      if (user != null) {
-        Get.toNamed('/product_list');
+      if(username.value.isEmpty){
+        setErrorUsername(StringManager.enterName);
+      }else if(password.value.isEmpty){
+        setErrorUsername('');
+        setErrorPassword(StringManager.enterPassword);
+      }else{
+        setErrorUsername('');
+        setErrorPassword('');
+        isLoading.value = true;
+        final user = await loginUseCase.execute(username.value, password.value);
+        setUsername('');
+        setPassword('');
+        if (user != null) {
+          Get.toNamed('/product_list');
+        }
+
+        isLoading.value = false;
       }
-      isLoading.value = false;
+
     } catch (e) {
       // Handle error
       isLoading.value = false;
