@@ -24,6 +24,6 @@ class ProductListController extends GetxController {
 
  void logoutUser() async {
    await logoutUseCase.execute();
-   Get.back();
+   Get.offAllNamed('/login');
   }
 }

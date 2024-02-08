@@ -34,8 +34,6 @@ class LoginController extends GetxController {
         setErrorPassword('');
         isLoading.value = true;
         final user = await loginUseCase.execute(username.value, password.value);
-        setUsername('');
-        setPassword('');
         if (user != null) {
           Get.toNamed('/product_list');
         }

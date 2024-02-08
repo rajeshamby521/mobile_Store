@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -52,6 +53,7 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   Future<void> logout() async {
-    await prefs!.clear();
+    prefs = await SharedPreferences.getInstance();
+    await prefs!.setBool("isLogin", false);
   }
 }
