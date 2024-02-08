@@ -1,9 +1,9 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import '../../data/models/user.dart';
 import '../../data/repositories/user_repository.dart';
+import '../../main.dart';
 
 class UserRepositoryImpl extends UserRepository {
   static Database? _database;
@@ -45,18 +45,13 @@ class UserRepositoryImpl extends UserRepository {
     if (maps.isEmpty) {
       return null;
     } else {
-      // final prefs = await SharedPreferences.getInstance();
-      // await prefs.setInt('userId', maps.first['id']);
-      // await prefs.setBool('isLogin', true);
+      await prefs!.setBool('isLogin', true);
       return User.fromMap(maps.first);
     }
   }
 
-  Future<void> logoutUser() async {
-    final db = await database;
-    // final prefs = await SharedPreferences.getInstance();
-    // await prefs.setInt('userId', maps.first['id']);
-    // await prefs.setBool('isLogin', true);
-    await db.delete('users');
+  @override
+  Future<void> logout() async {
+    await prefs!.clear();
   }
 }

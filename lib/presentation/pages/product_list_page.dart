@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_store/presentation/controllers/product_list_controller.dart';
 
+
 class ProductListPage extends StatelessWidget {
   final ProductListController productListController = Get.find();
 
@@ -118,8 +119,7 @@ class ProductListPage extends StatelessWidget {
         Get.back(); // Close the dialog
       },
       onCancel: () {
-        // Handle OK button action
-        Get.back(); // Close the dialog
+        productListController.logoutUser();
       },
     );
   }

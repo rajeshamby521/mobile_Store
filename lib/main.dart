@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_store/domain/usecases/logout_usecase.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'domain/repositories/user_repository_impl.dart';
 import 'domain/repositories/product_repository_impl.dart';
 import 'domain/usecases/add_product_usecase.dart';
@@ -15,7 +17,13 @@ import 'presentation/pages/login_page.dart';
 import 'presentation/pages/product_list_page.dart';
 import 'presentation/pages/register_page.dart';
 
-void main() {
+SharedPreferences? prefs;
+bool isLogin = false;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
+  isLogin=prefs!.getBool('isLogin') ?? false;
   runApp(MyApp());
 }
 
@@ -28,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/login',
+      initialRoute: isLogin ?  '/product_list' : '/login',
       getPages: [
         GetPage(
           name: '/login',
@@ -56,7 +64,7 @@ class MyApp extends StatelessWidget {
           name: '/product_list',
           page: () => ProductListPage(),
           binding: BindingsBuilder.put(
-                () => ProductListController(GetProductsUseCase(ProductRepositoryImpl())),
+                () => ProductListController(GetProductsUseCase(ProductRepositoryImpl()),LogoutUseCase(UserRepositoryImpl())),
           ),
         ),
       ],
